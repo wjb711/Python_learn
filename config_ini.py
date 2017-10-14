@@ -1,0 +1,15 @@
+import configparser
+CONFIGFILE="1.txt"
+config=configparser.ConfigParser()
+config.read(CONFIGFILE)
+#print (config.get('messages','greeting'))
+#radius=input(config.get('messages','questions')+' ')
+#print (config.get('messages','result'))
+#print (config.getfloat('numbers','pi')*radius**2)
+#print (config.get('messages'))
+#s=config.sections()
+#o=config.options("db")
+#print ('options:',o)
+#print (s)
+print (config.get("db","aaa"))
+print (config.get("db","bbb"))

@@ -1,0 +1,31 @@
+什么叫单向一次同步？
+简单地说就是文件从A传到B， 只传（同步）一次
+及时B把此文件删除，A也不能再传一次
+简单的说就是利用同步， 实现文件的cut功能
+
+实现方法：利用现有同步工具freefilesync
+下载地址
+https://www.freefilesync.org/download/FreeFileSync_9.2_Windows_Setup.exe
+此版本还支持sftp的key功能， 很不错。
+
+安装完成后，我们来做配置。
+简单地说就是实现功能， 由本地制定文件夹同步更新到 sftp服务器制定目录
+所以左边是本地目录，右边是sftp的上传目录，更新选【同步更新】
+
+之后，另存为一个批处理作业。
+在同一文件夹内，新建批处理，如cmd.cmd,内容如下
+del.exe /f /q E:\sftp\s\*.*
+
+请将E:\sftp\s\ 换成本地目录
+
+处理错误选【弹出对话框】
+以最小化运行
+
+在完成时，运行上面的cmd.cmd.
+
+freefilesync配置完成， 最后剩一点点，配置红色图标的realtimesync
+监控文件夹设为本地目录， 命令行为freefilesync的批处理文件。
+
+最后设置此realtimesync为开机自启动
+好了，大功告成。
+
