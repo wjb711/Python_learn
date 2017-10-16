@@ -1,15 +1,17 @@
 from barcode.writer import ImageWriter
-from barcode.codex import Code39
+from barcode.codex import Code13
 from PIL import Image, ImageDraw, ImageFont, ImageWin
 from io import StringIO
+#import cv2
 
 def generagteBarCode(x,y):
         imagewriter = ImageWriter()
         #保存到图片中
         # add_checksum : Boolean   Add the checksum to code or not (default: True)
-        ean = Code39(x, writer=imagewriter, add_checksum=False)
+        ean = Code13(x, writer=imagewriter, add_checksum=False)
         # 不需要写后缀，ImageWriter初始化方法中默认self.format = 'PNG'
         print ('保存到image2.png')
+        #cv2.imshow('ean',ean)
         ean.save('./barcode/'+x)
         #draw.text((imgSize[0]*0.6, (imgSize[1]*0.9)), '捷德中国.影音协会', (255,0,0), font=font)
         img = Image.open('./barcode/'+x+'.png')
@@ -27,4 +29,4 @@ def generagteBarCode(x,y):
 
         img.show()
 
-generagteBarCode('hello31a123','你好1呀')
+generagteBarCode('hello31a456','你好1呀')
