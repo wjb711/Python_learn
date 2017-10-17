@@ -57,9 +57,11 @@ if __name__ == "__main__":
 
     cap=cv2.VideoCapture(0)
     cv2.namedWindow('output',0)
+    print ('hello')
     #faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-    faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_alt_tree.xml')
+    faceCascade = cv2.CascadeClassifier('cars.xml')
     #人脸发现的xml路径， 发现是发现有没有人脸， 识别是识别是哪张脸不一样。
+    print ('hello1')
     while cv2.waitKey(1)!=ord('q'):
         time=datetime.datetime.now().strftime('%y-%m-%d %H:%M:%S')
         #日期时间显示在左上角
