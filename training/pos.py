@@ -12,13 +12,16 @@ def resize(img,size):
         print ('n',pic.shape)
         cv2.imwrite(img,re)
 
-    
+i=0    
 def pos_text():
     with open("pos.txt","w") as f:
         for b in os.listdir(directory_pos):
-            print ('pos'+'/'+b+' 1 0 0 136 36')
+            if b.endswith('.jpg'):
+                print ('pos'+'/'+b+' 1 0 0 136 36')
 
-            f.write('pos'+'/'+b+' 1 0 0 136 36'+'\n')
+                f.write('pos'+'/'+b+' 1 0 0 136 36'+'\n')
+                i=i+1
+    return i
 def neg():
     with open("neg.txt","w") as f:
         for b in os.listdir(directory_neg):
@@ -28,12 +31,14 @@ def neg():
 def pos_resize():
     os.chdir('c:/temp/pos/')
     for b in os.listdir(directory_pos):
-        resize(b,24)
+        if b.endswith('.jpg'):
+            resize(b,24)
 def neg_resize():
     os.chdir('c:/temp/neg/')
     for b in os.listdir(directory_neg):
-        resize(b,24)
-pos_text()
+        if b.endswith('.jpg'):
+            resize(b,24)
+p=pos_text()
 pos_resize()
 neg()
 neg_resize()
