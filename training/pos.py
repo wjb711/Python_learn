@@ -2,13 +2,15 @@ import os,sys,cv2
 directory_pos='c:/temp/pos'
 directory_neg='c:/temp/neg'
 os.chdir('c:/temp/')
+pos_width=24
+pos_high=90
 def resize(img,size):
     pic=cv2.imread(img)
-    if pic.shape==(24,24,3):
+    if pic.shape==(pos_width,pos_high,3):
 
         print ('y',pic.shape)
     else:
-        re=cv2.resize(pic,(size,size))
+        re=cv2.resize(pic,(os_width,pos_high))
         print ('n',pic.shape)
         cv2.imwrite(img,re)
 
