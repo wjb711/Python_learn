@@ -52,7 +52,7 @@ def upgrade(web):
 
     username=f.readlines()[1].replace('\n','')
 
-admin    f=open('config.ini','r')
+    f=open('config.ini','r')
 
     #打开配置文件config.ini
 
