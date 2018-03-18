@@ -1,0 +1,101 @@
+import urllib3,json,time
+
+#60网站要求密码MD5加密，所以下面是方法
+def md5(password):
+    
+    password=password
+    md5_url='http://www.60ma.net/md5.php?str='
+
+
+    http=urllib3.PoolManager()
+    md5=http.request('GET',md5_url+password)
+    
+    
+    password_md5=md5.data.decode('gb2312')
+    
+    return password_md5
+
+
+#这里是登陆用户名和秘密，获取到UserID，和UserKey
+def login(username,password):
+    http=urllib3.PoolManager()
+    url='http://sms.60ma.net/loginuser?cmd=login&encode=utf-8&dtype=json&username='
+    
+    r = http.request('GET', url+username+'&password='+md5(password))
+    Return=json.loads(r.data.decode('utf-8'))
+    
+    return Return['Return']['UserID'],Return['Return']['UserKey']
+
+
+UserID,UserKey=login('wjb711','000000')
+print (UserID,UserKey)
+
+#这个是查询功能
+def query():
+    http=urllib3.PoolManager()
+    url='http://sms.60ma.net/queryinfo?cmd=query&encode=utf-8&api=yes&dtype=json&userid='
+    r = http.request('GET', url+UserID+'&userkey='+UserKey)
+    
+    Return=json.loads(r.data.decode('utf-8'))
+    print (r.data.decode('utf-8'))
+
+#获取号码的功能
+def get_number(docks):
+    http=urllib3.PoolManager()
+    url='http://sms.60ma.net/newsmssrv?cmd=gettelnum&encode=utf-8&dtype=json'
+    r = http.request('GET', url+'&userid='+UserID+'&userkey='+UserKey+'&docks='+docks)
+    print (type(r))
+    #print (r.data.decode('utf-8'))
+    Return=json.loads(r.data.decode('utf-8'))
+    #print (Return['Return']['Telnum'])
+    return Return['Return']['Telnum']
+
+#释放所有号码
+def release_all():
+    http=urllib3.PoolManager()
+    url='http://sms.60ma.net/newsmssrv?cmd=freetelnumall&encode=utf-8&dtype=json'
+    r = http.request('GET', url+'&userid='+UserID+'&userkey='+UserKey)
+    print (r.data.decode('utf-8'))
+
+
+#读短信
+def read_SMS(docks,number):
+    global i,message
+    i=i+1
+    if i<10:
+
+        time.sleep(15)
+        http=urllib3.PoolManager()
+        url='http://sms.60ma.net/newsmssrv?cmd=getsms&encode=utf-8&dtype=json'
+        r = http.request('GET', url+'&userid='+UserID+'&userkey='+UserKey+'&dockcode='+docks+'&telnum='+number)
+        print (type(r))
+        print (r.data.decode('utf-8'))
+        Return=json.loads(r.data.decode('utf-8'))
+        print (Return)
+        ErrorInfo=Return['Return']['ErrorInfo']
+        if ErrorInfo=="成功！":
+            message=Return['Return']['SmsContent']
+            print ('success************',message)
+            return message
+            #read_SMS(docks,number)
+        else:
+            read_SMS(docks,number)
+        
+    #return Return['Return']['Telnum']
+
+if __name__=='__main__':
+    
+    UserID,UserKey=login('wjb711','000000')
+    #docks要从客户端里读取接入码，这个是美团注册用的
+    #https://passport.meituan.com/account/unitivesignup?service=www&continue=http%3A%2F%2Fwww.meituan.com%2Faccount%2Fsettoken%3Fcontinue%3Dhttp%253A%252F%252Fwww.meituan.com%252F&mtt=1.index%2Fchangecity.0.0.jewi0qux
+    docks='BA8455AC6DC9ADC'
+    print (UserID,UserKey)
+    query()
+    number=get_number(docks)
+    print (number)
+    i=0
+    #while i<12:
+    sms=read_SMS(docks,number)
+    #    i=i+1
+    print ('sms is:',sms,message)
+    release_all()
