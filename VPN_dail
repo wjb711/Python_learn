@@ -1,0 +1,21 @@
+import win32ras
+import time,os
+
+
+
+
+def Connect(dialname, account, passwd):
+    dial_params = (dialname, '', '', account, passwd, '')
+    return win32ras.Dial(None, None, dial_params, None)
+
+
+if __name__=='__main__':
+    time.sleep(2)
+    vpn_name='VPN2'
+    ip='m4451978.ros2.chengshu.com'
+    username='m4451978'
+    password='2820406'
+    x=Connect(vpn_name,username,password)
+    time.sleep(3)
+    #这句是断开连接
+    win32ras.HangUp(win32ras.EnumConnections ()[0][0])
