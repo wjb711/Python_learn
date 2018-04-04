@@ -1,0 +1,94 @@
+import cv2
+import numpy as np
+import easygui as g
+from PIL import Image,ImageDraw,ImageFont
+
+def draw_circle(event,x,y,flags,param):
+    global x0,y0,x1,y1,mode,rate
+    #print (event,x,y,flags,param)
+    if event==1:
+        mode=True
+        x0,y0=x,y
+
+    if mode==True and event==0:
+        #print ('y')
+        cv2.line(copy,(x0,y0),(x,y),(0,255,0),1)
+        #frame=copy
+        #cv2.imshow('frame',frame)
+    if event==4:
+        mode=False
+        x1,y1=x,y
+
+        try:
+            length=round(rate*((x0-x1)**2+(y0-y1)**2)**0.5,2)
+            g.msgbox(str(length)+'mm',title='测量长度')
+        except:
+            #length0=float(g.integerbox(msg="第一次使用时请输入对应的真实长度?(单位毫米mm)",title="测量长度",lowerbound=0,upperbound=100))
+            length0=float(g.enterbox(msg="第一次使用时请输入对应的真实长度?(单位毫米mm)",title="测量长度",default=10))
+            rate=length0/(((x0-x1)**2+(y0-y1)**2)**0.5)
+        #g.msgbox(rate)
+        #print (rate)
+        #print ('**********',x0,y0,x1,y1)
+    if event == cv2.EVENT_LBUTTONDBLCLK:
+        cv2.circle(frame,(x,y),100,(255,0,0),-1)
+
+cap=cv2.VideoCapture(0)
+#cv2.namedWindow("detailEnhance", cv2.WINDOW_NORMAL)
+cv2.namedWindow("frame", cv2.WINDOW_NORMAL)
+img = np.zeros((480,640,3), np.uint8)
+cv2.setMouseCallback('frame',draw_circle)
+mode=False
+while True:
+    if mode==True:
+        frame=copy
+    else:
+        _,frame=cap.read()
+    
+    copy=frame.copy()
+    
+    frame = cv2.addWeighted(img,0.4,frame,0.6,0)  
+    detailEnhance=frame
+    #detailEnhance = cv2.detailEnhance(frame, sigma_s=10, sigma_r=0.15)
+    
+    y=0
+    
+    for i in range(1,480):
+        color=(255,0,0)
+        if i%60==0:
+            y=y+1
+            if y==4:
+                color=(0,0,255)
+            cv2.line(detailEnhance,(0,i),(640,i),color,1)
+    y=0       
+    for i in range(1,640):
+        color=(255,0,0)
+        if i%60==0:
+            y=y+1
+            if y ==5:
+                color=(0,0,255)
+            cv2.line(detailEnhance,(i,0),(i,480),color,1)
+    #img = Image.fromarray(frame)
+    #转化opencv图片格式为PIL格式
+    #img=Image.open(pic)
+    #imgSize=img.size
+    #font = ImageFont.truetype('simhei.ttf', int((imgSize[0])*0.04))
+    #draw = ImageDraw.Draw(img)
+    #draw.text(((imgSize[0]-320), (imgSize[1]*0.96)), '捷德中国.影音协会', (255,0,0), font=font)，注意格式是蓝绿红BGR
+    #draw.text((imgSize[0]*0.6, (imgSize[1]*0.9)), '捷德中国.影音协会', (0,0,255), font=font)
+    #再次转换PIL格式，回到opencv格式
+    #opencv = np.array(img)
+    cv2.putText(detailEnhance,'ESC:quit!   s:save template    q:clear template    h:help',(15,15),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
+    cv2.imshow('frame',detailEnhance)
+    #cv2.imshow('dst',dst)
+    #cv2.imshow('detailEnhance',detailEnhance)
+    key=cv2.waitKey(1)
+    if key==27:
+        break
+    if key==ord('s'):
+        img=copy
+    if key==ord('q'):
+        img = np.zeros((480,640,3), np.uint8)
+    if key==ord('h'):
+        g.msgbox('精准测量时，第一次需要录入真实距离，后续即可测量长度，其他需求联系王剑波')
+cv2.destroyAllWindows()
+        
