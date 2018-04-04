@@ -1,0 +1,62 @@
+import os,time
+import pyscreeze,cv2,subprocess
+from PIL import Image,ImageDraw,ImageFont,ImageGrab
+import numpy as np
+
+class adb:
+    def write(self,x):
+        os.popen('adb shell input text '+x)
+    def tap(self,x,y):
+        os.popen('adb shell input tap '+str(x)+' '+str(y))
+    def screen(self):
+        os.popen('adb shell screencap -p /sdcard/360/autojump.png')
+        time.sleep(2)
+        os.popen('adb pull /sdcard/360/autojump.png')
+    def screencap(self):
+        try:
+            os.remove('autojump.png')
+        except:
+            pass
+        pipe = subprocess.Popen("adb shell screencap -p",
+                        stdin=subprocess.PIPE,
+                        stdout=subprocess.PIPE, shell=True)
+        image_bytes = pipe.stdout.read().replace(b'\r\n', b'\n')
+        image = cv2.imdecode(np.fromstring(image_bytes, np.uint8), cv2.IMREAD_COLOR)
+        #cv2.imshow("", image)
+        cv2.imwrite('autojump.png',image)
+        
+    def keycode(self,code):
+        os.popen('adb shell input keyevent '+str(code))
+    def pic(self,im):
+        adb.screencap(1)
+        image1='autojump.png'
+        image2=Image.open(im)
+        result= pyscreeze.locate(image2,image1)
+        if result==None:
+            pass
+        else:
+            x,y,w,h=result
+            adb.tap(1,int(x+w/2),int(y+h/2))
+    def wait(self,im):
+        adb.screencap(1)
+        image1='autojump.png'
+        image2=Image.open(im)
+        result= pyscreeze.locate(image2,image1)
+        print ('result is ',result)
+        if result==None:
+            adb.wait(1,im)
+        else:
+            x,y,w,h=result
+            time.sleep(0.50)
+            adb.tap(1,int(x+w/2),int(y+h/2))
+
+#adb.pic(1,'plus.png')
+i=1
+while i<85:
+    adb.keycode(1,i)
+    print (i)
+    time.sleep(3)
+    i=i+1
+
+
+
