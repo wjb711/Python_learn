@@ -1,0 +1,32 @@
+import os
+import easygui as g
+import getpass
+import socket
+import datetime
+import sys
+
+now=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+app='CPAU.exe'
+x=os.popen(app).readlines()
+while x==[]:
+    g.msgbox('超级用户：第一步，手动把'+app+'复制到c:\windows\system32\目录下')
+    
+    
+while not os.path.exists(now+'.exe'):
+
+#print ('x',x.read())
+    print (dir(getpass))
+    hostname = socket.gethostname()
+    #print (hostname)
+    
+    print (getpass.getuser())
+    file_path = g.fileopenbox(default="*.exe",title='第二步，选择要运行的程序')
+    username=g.enterbox(title='第三步，输入domain\用户名')
+    password=g.passwordbox(title='第四步，输入用户密码')
+    #domain=g.enterbox(title='第四步，输入域名domain')
+    x1=os.popen(app+' -u '+username+' -p '+password+' -ex '+file_path+' -enc -file '+now+'.exe').readlines()
+    print (x1)
+
+with open(now+'.bat', 'w') as f:
+    f.write('CPAU.exe -dec -file '+sys.path[0]+'\\'+now+'.exe'+ ' -lwp')
+g.msgbox('结束！请注意，已生成'+now+'.bat')
