@@ -1,8 +1,8 @@
-#±¾³ÌĞòÄ¿µÄÊÇ½ØÈ¡ÆÁÄ»£¬ÉÏ´«ÖÁÊı¾İ¿â£¬ ocrÊ¶±ğÎÄ×Öºó·¢»Ø¿Í»§¶Ë
-#ÒÀÀµ¿âµÄ°²×°pip install opencv-python Pillow baidu-aip easygui
-#´óÖÂ·½·¨ÊÇ£¬1£¬tkinter´´½¨´°¿Ú£¬ÉÏÃæÓĞÒ»¸ö°´Å¥button, °´Å¥Î»ÓÚÆÁÄ»ÓÒÏÂ½Ç
-#°´ÏÂ°´Å¥ºó£¬ ½ØÆÁ£¬²¢ÂúÆÁÏÔÊ¾£¬ÔÙºóÀ´Ê¹ÓÃopencv½ØÈ¡¾ØĞÎ¿ò£¬Ò²¾ÍÊÇĞèÒªÊ¶±ğÎÄ×ÖµÄµØ·½
-#×îºó£¬°ÑÍ¼Æ¬ÉÏ´«µ½·şÎñÆ÷ÉÏ£¬»ñÈ¡µ½ÔÚÏßocrÎÄ×Öºó£¬Í¬¹ıeasygui·µ»Ø¡£
+#æœ¬ç¨‹åºç›®çš„æ˜¯æˆªå–å±å¹•ï¼Œä¸Šä¼ è‡³æ•°æ®åº“ï¼Œ ocrè¯†åˆ«æ–‡å­—åå‘å›å®¢æˆ·ç«¯
+#ä¾èµ–åº“çš„å®‰è£…pip install opencv-python Pillow baidu-aip easygui
+#å¤§è‡´æ–¹æ³•æ˜¯ï¼Œ1ï¼Œtkinteråˆ›å»ºçª—å£ï¼Œä¸Šé¢æœ‰ä¸€ä¸ªæŒ‰é’®button, æŒ‰é’®ä½äºå±å¹•å³ä¸‹è§’
+#æŒ‰ä¸‹æŒ‰é’®åï¼Œ æˆªå±ï¼Œå¹¶æ»¡å±æ˜¾ç¤ºï¼Œå†åæ¥ä½¿ç”¨opencvæˆªå–çŸ©å½¢æ¡†ï¼Œä¹Ÿå°±æ˜¯éœ€è¦è¯†åˆ«æ–‡å­—çš„åœ°æ–¹
+#æœ€åï¼ŒæŠŠå›¾ç‰‡ä¸Šä¼ åˆ°æœåŠ¡å™¨ä¸Šï¼Œè·å–åˆ°åœ¨çº¿ocræ–‡å­—åï¼ŒåŒè¿‡easyguiè¿”å›ã€‚
 import tkinter,cv2,PIL,numpy
 from PIL import Image,ImageDraw,ImageFont,ImageGrab
 from aip import AipOcr
@@ -19,19 +19,19 @@ class OCR():
     def __init__(self):
         self.window()
 
-    #´´½¨´°¿Ú   
+    #åˆ›å»ºçª—å£   
     def window(self):
         window=tkinter.Tk()
-        #window.title('×ªÎÄ±¾')
+        #window.title('è½¬æ–‡æœ¬')
         position_x=window.winfo_screenwidth()-150
         window.geometry('%dx%d+%d+%d' % (100,30,(window.winfo_screenwidth()-100), (window.winfo_screenheight() - 100) ))
         window.resizable(width=False, height=False)
 
-        button0=tkinter.Button(window, text="½ØÍ¼×ªÎÄ×Ö", command=self.button_command).pack()
+        button0=tkinter.Button(window, text="æˆªå›¾è½¬æ–‡å­—", command=self.button_command).pack()
         window.mainloop()
 
 
-    #µã»÷°´Å¥ºó£¬½ØÆÁ£¬²¢È«ÆÁÏÔÊ¾    
+    #ç‚¹å‡»æŒ‰é’®åï¼Œæˆªå±ï¼Œå¹¶å…¨å±æ˜¾ç¤º    
     def button_command(self):
         self.mode=0
         self.mouse=False
@@ -46,7 +46,7 @@ class OCR():
         imgSize=im.size
         font = ImageFont.truetype('simhei.ttf', int((imgSize[0])*0.025))
         draw = PIL.ImageDraw.Draw(im)
-        draw.text((imgSize[0]*0.7, (imgSize[1]*0.92)), 'ÍÏ×§Êó±ê½ØÍ¼£¬È¡Ïû°´ESC', (255,0,0), font=font)
+        draw.text((imgSize[0]*0.7, (imgSize[1]*0.92)), 'æ‹–æ‹½é¼ æ ‡æˆªå›¾ï¼Œå–æ¶ˆæŒ‰ESC', (255,0,0), font=font)
         
         img=numpy.array(im)
         img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
@@ -74,7 +74,7 @@ class OCR():
         cv2.destroyWindow("window_full")
         
 
-    #Êó±ê²Ù×÷£¬ÏÈ°´ÏÂÒÆ¶¯£¬»­³ö¾ØĞÎ¿ò
+    #é¼ æ ‡æ“ä½œï¼Œå…ˆæŒ‰ä¸‹ç§»åŠ¨ï¼Œç”»å‡ºçŸ©å½¢æ¡†
     def mouse_action(self,event,x,y,flags,param):
         global img_copy
         self.mouse_break=0
@@ -104,7 +104,7 @@ class OCR():
             print ('hello:',self.mouse_break)
             self.baidu_ocr()
 
-    #ÉÏ´«ÖÁ·şÎñÆ÷OCR²Ù×÷£¬ ²¢·µ»ØÊ¶±ğºóµÄÎÄ×Ö        
+    #ä¸Šä¼ è‡³æœåŠ¡å™¨OCRæ“ä½œï¼Œ å¹¶è¿”å›è¯†åˆ«åçš„æ–‡å­—        
     def baidu_ocr(self):
         APP_ID = '10839731';
         API_KEY = '93THkmKKFHGS5inBt8ulCeGH';
@@ -113,7 +113,7 @@ class OCR():
         image=open('t.png','rb').read()
         t=client.basicGeneral(image);
 
-        """ Èç¹ûÓĞ¿ÉÑ¡²ÎÊı """
+        """ å¦‚æœæœ‰å¯é€‰å‚æ•° """
 
         options = {}
         options["language_type"] = "CHN_ENG"
@@ -126,13 +126,13 @@ class OCR():
         for i in t['words_result']:
             sum0=sum0+i['words']+'\n'
         print (sum0)
-        easygui.msgbox(sum0,title='½ØÍ¼×ªÎÄ×Ö£¨¿É¸´ÖÆ£©£º½İµÂIT²¿³öÆ·')
+        easygui.msgbox(sum0,title='æˆªå›¾è½¬æ–‡å­—ï¼ˆå¯å¤åˆ¶ï¼‰ï¼šæ·å¾·ITéƒ¨å‡ºå“')
         os.remove('t.png')
 
 
 
 if __name__=='__main__':
-#ÄÚÍø´úÀíµÄÅäÖÃÓëÊ¹ÓÃ
+#å†…ç½‘ä»£ç†çš„é…ç½®ä¸ä½¿ç”¨
     os.environ['https_proxy']='http://wanjianb:Beijing123_@web-gate4a.accounts.intern:3128'
     OCR()
 
