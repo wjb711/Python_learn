@@ -1,0 +1,17 @@
+import socket
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#print (sys.argv[0],sys.argv[1])
+server.bind(('127.0.0.1',int(sys.argv[1])))
+#server.bind(('127.0.0.1',81))
+while True:
+    server.listen(5)
+    print('starting....')
+    conn, addr = server.accept()
+    print(conn)
+    print('client addr', addr)
+    print('ready to recv the passwd...')
+    client_msg = conn.recv(1024)
+    print('client passwd changed: %s' % client_msg)
+    conn.send(client_msg.upper())
+    conn.close()
+    #server.close()
