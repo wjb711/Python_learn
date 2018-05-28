@@ -1,9 +1,11 @@
-﻿#this is a python script based on 'cpau.exe' to to use as Runas function
+#this is a python script based on 'cpau.exe' to to use as Runas function
 #you have to download cpau.exe
 #if you do not have easygui or datetime installed
 #you have to install it by 'pip install easygui '
 #you have to install it by 'pip install datetime '
 #for CPAU.exe ,you can download it here https://github.com/wjb711/Python_learn/blob/master/office/CPAU.exe
+#for CPAU usage, you can find help information here http://www.joeware.net/freetools/tools/cpau/usage.htm
+#for python download, you can find it here https://www.python.org/downloads/
 
 import os
 import easygui as g
