@@ -22,6 +22,7 @@ class OCR():
     #创建窗口   
     def window(self):
         window=tkinter.Tk()
+        window.wm_attributes('-topmost',1)
         #window.title('转文本')
         position_x=window.winfo_screenwidth()-150
         window.geometry('%dx%d+%d+%d' % (100,30,(window.winfo_screenwidth()-100), (window.winfo_screenheight() - 100) ))
@@ -85,7 +86,7 @@ class OCR():
         for i in t['words_result']:
             sum0=sum0+i['words']+'\n'
         print (sum0)
-        easygui.msgbox(sum0,title='截图转文字（可复制）：捷德IT部出品')
+        easygui.msgbox(sum0,title='截图转文字(可复制)')
         os.remove('t.png')
 
 
