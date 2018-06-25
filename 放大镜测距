@@ -73,8 +73,8 @@ while True:
     #imgSize=img.size
     #font = ImageFont.truetype('simhei.ttf', int((imgSize[0])*0.04))
     #draw = ImageDraw.Draw(img)
-    #draw.text(((imgSize[0]-320), (imgSize[1]*0.96)), '捷德中国.影音协会', (255,0,0), font=font)，注意格式是蓝绿红BGR
-    #draw.text((imgSize[0]*0.6, (imgSize[1]*0.9)), '捷德中国.影音协会', (0,0,255), font=font)
+    #draw.text(((imgSize[0]-320), (imgSize[1]*0.96)), 'xx中国.影音协会', (255,0,0), font=font)，注意格式是蓝绿红BGR
+    #draw.text((imgSize[0]*0.6, (imgSize[1]*0.9)), 'xx中国.影音协会', (0,0,255), font=font)
     #再次转换PIL格式，回到opencv格式
     #opencv = np.array(img)
     cv2.putText(detailEnhance,'ESC:quit!   s:save template    q:clear template    h:help',(15,15),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,255),1)
@@ -89,6 +89,6 @@ while True:
     if key==ord('q'):
         img = np.zeros((480,640,3), np.uint8)
     if key==ord('h'):
-        g.msgbox('精准测量时，第一次需要录入真实距离，后续即可测量长度，其他需求联系王剑波')
+        g.msgbox('精准测量时，第一次需要录入真实距离，后续即可测量长度，其他需求联系...')
 cv2.destroyAllWindows()
         
