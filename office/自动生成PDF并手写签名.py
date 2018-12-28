@@ -46,12 +46,12 @@ draw.text((l2, 440), w2, (70, 65, 68), font=font)
 t=int(random.uniform(20,40))
 l2=int(random.uniform(150,350))
 font1 = ImageFont.truetype("shouxie.ttf", t)
-draw.text((900, l2), "周心友", (70, 65, 68), font=font1)    #设置文字位置/内容/颜色/字体
+draw.text((900, l2), "周XX", (70, 65, 68), font=font1)    #设置文字位置/内容/颜色/字体
 
 t=int(random.uniform(20,40))
 l2=int(random.uniform(150,350))
 font1 = ImageFont.truetype("shouxie.ttf", t)
-draw.text((1000, l2), "王剑波", (70, 65, 68), font=font1)    #设置文字位置/内容/颜色/字体
+draw.text((1000, l2), "王XX", (70, 65, 68), font=font1)    #设置文字位置/内容/颜色/字体
 
 t=int(random.uniform(20,40))
 l2=int(random.uniform(150,350))
@@ -61,12 +61,12 @@ draw.text((1080, l2), y0, (70, 65, 68), font=font1)    #设置文字位置/内�
 t=int(random.uniform(20,40))
 l2=int(random.uniform(420,650))
 font1 = ImageFont.truetype("shouxie.ttf", t)
-draw.text((900, l2), "沈涛", (70, 65, 68), font=font1)
+draw.text((900, l2), "沈X", (70, 65, 68), font=font1)
 
 t=int(random.uniform(20,40))
 l2=int(random.uniform(420,650))
 font1 = ImageFont.truetype("shouxie.ttf", t)
-draw.text((1000, l2), "周心友", (70, 65, 68), font=font1)
+draw.text((1000, l2), "周XX", (70, 65, 68), font=font1)
 
 
 t=int(random.uniform(20,40))
