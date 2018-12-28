@@ -25,7 +25,7 @@ def command(action,end):
 
 #print ('****************************')
 if __name__=='__main__':
-    print ("欢迎使用本程序")
+    print ("欢迎使用本程序!")
     print ("本程序的目的是为了实现自动备份cisco交换机的配置文件")
     print ('格式为 本程序.exe 服务器ip 用户名 password enable_password')
     print ('')
