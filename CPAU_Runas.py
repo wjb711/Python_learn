@@ -37,6 +37,6 @@ while not os.path.exists(now+'.exe'):
     print (x1)
 
 with open(now+'.bat', 'w') as f:
-    f.write('CPAU.exe -dec -file '+sys.path[0]+'\\'+now+'.exe'+ ' -lwp')
+    f.write('CPAU.exe -dec -file '+'.\\'+now+'.exe'+ ' -lwp'+'\n')
     f.write('pause')
 g.msgbox('Done, please check '+now+'.bat')
