@@ -18,25 +18,32 @@ now=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
 app='CPAU.exe'
 x=os.popen(app).readlines()
 while x==[]:
-    g.msgbox('CPAU_Runas：1st，copy '+app+'copy to folder c:\windows\system32\ ')
+    g.msgbox('this programe is used for run as function of windows, you need to download CPAU.exe \
+            from here https://github.com/wjb711/Python_learn/blob/master/office/CPAU.exe  \
+            1st，copy '+app+'copy to folder c:\windows\system32\ ')
     
     
-while not os.path.exists(now+'.exe'):
+#while not os.path.exists(now+'.exe'):
 
 #print ('x',x.read())
-    print (dir(getpass))
-    hostname = socket.gethostname()
-    #print (hostname)
-    
-    print (getpass.getuser())
-    file_path = g.fileopenbox(title='2nd，select exe or bat files')
-    username=g.enterbox(title='3rd，domain\ username',msg='for example "accounts\wanjianb"')
-    password=g.passwordbox(title='4th，enterpassword')
-    
-    x1=os.popen(app+' -u '+username+' -p '+password+' -ex '+file_path+' -enc -file '+now+'.exe').readlines()
-    print (x1)
+print (dir(getpass))
+hostname = socket.gethostname()
+#print (hostname)
 
-with open(now+'.bat', 'w') as f:
-    f.write('CPAU.exe -dec -file '+'.\\'+now+'.exe'+ ' -lwp'+'\n')
+print (getpass.getuser())
+file_path = g.fileopenbox(title='2nd，select exe or bat files')
+file_path0 = file_path.replace('\\','/')
+dirname,filename=os.path.split(file_path0)
+print(filename)
+#input(a)
+username=g.enterbox(title='3rd，domain\ username',msg='for example "accounts\wanjianb"')
+password=g.passwordbox(title='4th，enterpassword')
+
+x1=os.popen(app+' -u '+username+' -p '+password+' -ex '+file_path+' -enc -file '+filename+'.txt').readlines()
+print (x1)
+
+with open(filename+'.bat', 'w') as f:
+    f.write('CPAU.exe -dec -file '+'.\\'+filename+'.txt'+ ' -lwp'+'\n')
     f.write('pause')
-g.msgbox('Done, please check '+now+'.bat')
+g.msgbox('Done, please check '+filename+'.bat')
+os.system(filename+'.bat')
