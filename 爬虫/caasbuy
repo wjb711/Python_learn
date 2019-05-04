@@ -7,6 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from pyquery import PyQuery as pq
 import time
 import easygui
+
 desired_capabilities = DesiredCapabilities.CHROME  # 修改页面加载策略
 desired_capabilities["pageLoadStrategy"] = "normal"
 driver=webdriver.Chrome()
