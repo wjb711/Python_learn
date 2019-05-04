@@ -1,0 +1,79 @@
+from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from pyquery import PyQuery as pq
+import time
+import easygui
+desired_capabilities = DesiredCapabilities.CHROME  # 修改页面加载策略
+desired_capabilities["pageLoadStrategy"] = "normal"
+driver=webdriver.Chrome()
+
+    #print('hello',x)
+n=1460
+for x in range(int(n/5000)+1):
+    
+    print(x*5000)
+    url="https://www.caasbuy.com/search.lf?catName=电脑耗材&start="+str(x*5000)+"&length=5000"
+    #easygui.msgbox('hello0')
+    print(url)
+    
+    driver.get(url)
+    WebDriverWait(driver, 800).until(lambda x: x.find_element_by_id("next_page"))
+    #easygui.msgbox('hello1')
+    time.sleep(2)
+    #easygui.msgbox('hello2')
+
+    html = driver.page_source.replace('xmlns', 'another_attr')
+
+    doc = pq(html)
+    #with open('1.html','w',encoding="utf-8") as f:
+    #    f.write(doc)
+        
+    #print(doc)
+    #easygui.msgbox('hello3')
+
+    lis=doc('.tab-content .p0').items()
+    l_ID=[] #ID
+    for i in lis:
+        l_ID.append(i.attr('itemid'))
+
+    l_name=[] #名称
+    for x in doc(".p_name").items():
+        l_name.append(x.text())
+
+    l_no=[] #货号
+    for x in doc(".p_no.mr30").items():
+        l_no.append(x.text())
+
+    l_brand=[] #品牌
+    for x in doc(".p_brand.mb5").items():
+        l_brand.append(x.text())
+
+    l_detail=[] #描述
+    for x in doc(".p_desc.mt10.mb5").items():
+        l_detail.append(x.text())
+
+    l_unit=[] #单位
+    for x in doc(".p_sku.mr30").items():
+        l_unit.append(x.text())
+
+    l_size=[] #规格
+    for x in doc(".p_um.mr30").items():
+        l_size.append(x.text())
+
+    l_sales=[] #销量
+    for x in doc(".p_sales ").items():
+        l_sales.append(x.text())
+
+    zipped=zip(l_ID,l_name,l_brand,l_no,l_detail,l_unit,l_size,l_sales)
+    #print(list(zipped))
+    with open('data.txt','a',encoding='utf-8') as f:
+        for y in list(zipped):
+            f.write(str(y).replace('\\n','')[1:-1]+'\n')
+        f.close()
+        time.sleep(2)
+easygui.msgbox('end')
+
