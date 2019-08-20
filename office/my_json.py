@@ -27,8 +27,11 @@ def readjson(file,key):
 
         load_dict = json.load(f)
     #print(load_dict)
+        if key in load_dict:         
 
-    return load_dict[key]
+            return load_dict[key]
+        else:
+            return None
 
 writejson('config.ini','中文key3','日文value3')
 x=readjson('config.ini','中文key3')
