@@ -1,0 +1,57 @@
+import paramiko
+import os,time
+
+#上传函数
+def sftp_upload(local,remote):
+
+    for f in os.listdir(local):#遍历本地目录
+        sftp.put(os.path.join(local+f),os.path.join(remote+f))#上传目录中的文件
+
+#下载函数
+def sftp_download(local,remote):
+
+    for f in sftp.listdir(remote):#遍历远程目录
+        print (f,local+f)
+        sftp.get(os.path.join(remote+f),os.path.join(local+f))#下载目录中文件
+
+    
+
+#主函数
+if __name__ == '__main__':
+
+    host = 'your server IP'
+    
+    port = your server port
+    #username = 'shgdinfo' #用户名
+    username='your name'
+    pkey = paramiko.RSAKey.from_private_key_file('yourkey') #这里定义rsa私钥文件的位置
+    
+    sf = paramiko.Transport((host,port))
+    #sf.connect(username = username,password = password)
+    sf.connect(username = username,pkey=pkey)
+    #trans.connect(username='super', pkey=pkey)
+    sftp = paramiko.SFTPClient.from_transport(sf)
+
+    now=time.time()
+    date1=-1
+
+    for account in sftp.listdir('./'):
+        #print(account)
+        for folder in sftp.listdir(account):
+            if folder.startswith('.'):
+                pass
+            else:
+                #print(account+'/'+folder)
+                for file in sftp.listdir(account+'/'+folder):
+                    if '.' in file:
+                        filename=account+'/'+folder+'/'+file
+                        mtime=sftp.stat(filename).st_mtime
+                        date0=int((now-mtime)/86400)
+                        if date0>date1:
+                            print(filename,'距今天数：',date0)
+                    else:
+                        pass
+
+    sf.close()
+    a=input('输入任意键退出')
+
