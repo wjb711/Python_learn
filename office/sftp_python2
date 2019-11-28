@@ -19,39 +19,60 @@ def sftp_download(local,remote):
 #主函数
 if __name__ == '__main__':
 
-    host = 'your server IP'
     
-    port = your server port
+    host=input('host:')
+    #port = 122 #端口
+    #port = 122
+    port=int(input('port:'))
     #username = 'shgdinfo' #用户名
-    username='your name'
-    pkey = paramiko.RSAKey.from_private_key_file('yourkey') #这里定义rsa私钥文件的位置
-    
+    #username='root'
+    username=input('username:')
+    #pkey = paramiko.RSAKey.from_private_key_file('./xxx.rsa') #这里定义rsa私钥文件的位置
+    password=input('password:')
     sf = paramiko.Transport((host,port))
-    #sf.connect(username = username,password = password)
-    sf.connect(username = username,pkey=pkey)
+    sf.connect(username = username,password = password)
+    #sf.connect(username = username,pkey=pkey)
     #trans.connect(username='super', pkey=pkey)
     sftp = paramiko.SFTPClient.from_transport(sf)
 
     now=time.time()
     date1=-1
 
+
     for account in sftp.listdir('./'):
         #print(account)
-        for folder in sftp.listdir(account):
-            if folder.startswith('.'):
-                pass
-            else:
-                #print(account+'/'+folder)
-                for file in sftp.listdir(account+'/'+folder):
-                    if '.' in file:
-                        filename=account+'/'+folder+'/'+file
-                        mtime=sftp.stat(filename).st_mtime
-                        date0=int((now-mtime)/86400)
-                        if date0>date1:
-                            print(filename,'距今天数：',date0)
-                    else:
+        if account.startswith('.'):
+            pass
+        else:
+            try:
+                for folder in sftp.listdir(account):
+                    if folder.startswith('.'):
                         pass
+                    for file in sftp.listdir(account+'/'+folder):
+                        if '.' in file:
+                            filename=account+'/'+folder+'/'+file
+                            mtime=sftp.stat(filename).st_mtime
+                            date0=int((now-mtime)/86400)
+                            if date0>date1:
+                                print(filename,'距今天数：',date0)
+                        else:
+                            pass
+            except:
+                print(account)
+##            else:
+##                #print(account+'/'+folder)
+##                for file in sftp.listdir(account+'/'+folder):
+##                    if '.' in file:
+##                        filename=account+'/'+folder+'/'+file
+##                        mtime=sftp.stat(filename).st_mtime
+##                        date0=int((now-mtime)/86400)
+##                        if date0>date1:
+##                            print(filename,'距今天数：',date0)
+##                    else:
+##                        pass
 
     sf.close()
     a=input('输入任意键退出')
+
+
 
