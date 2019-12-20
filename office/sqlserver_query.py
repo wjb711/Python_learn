@@ -55,7 +55,7 @@ def sqlserver():
     serverName = "localhost"
     #登陆用户名和密码
     userName = 'sa'
-    passWord = '20184444.com'
+    passWord = 'yourpassword'
     #today='2018-10-10'
     today = datetime.date.today()
     now=str(datetime.datetime.now())[:19]
