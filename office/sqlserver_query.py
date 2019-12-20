@@ -65,9 +65,6 @@ def sqlserver():
     #建立连接并获取cursor
     conn = pymssql.connect(serverName, userName , passWord, "door")
     cur = conn.cursor()
-    #print("select logName from UserLog where logController=2 and logReader=3 and logEvent='0401' and logDate='"+date0+"'")
-    #cur.execute("select logName from UserLog where logController=2 and logReader=3 and logEvent='0401' and logDate='2018-10-16'")
-    #list_out=cur.execute("select logName from UserLog where logController=2 and logReader=4 and logEvent='0401' and logDate='2018-10-10'")
     cur.execute("select logName from UserLog where logController=2 and logReader=3 and logEvent='0401' and logName!='车间参观卡' and logDate=%s",value)
 
     list_in=cur.fetchall()
@@ -92,22 +89,16 @@ def monitor():
     position_x=window.winfo_screenwidth()-150
     window.geometry('%dx%d+%d+%d' % (750,80,(window.winfo_screenwidth()-750), (window.winfo_screenheight() -100) ))
     now=str(datetime.datetime.now())
-            #num=1
-            
+      
 
     x=tk.Label(window, text='jello')
     x.config(text=now)
     x.pack()
     print('start')
     while True:
-        #now=str(datetime.datetime.now())[:19]
-        #q=Pool()
+
         list0=set(sqlserver())
-        #q.close()
-        #q.join()
-        #print(list0.get())
-        #list0=set(sqlserver())
-        #now=str(list0)
+
         try:
             if len(list0)==1:
                 log('log.txt',str(list0))
@@ -117,11 +108,10 @@ def monitor():
                 x.config(text=str(list0),bg='green',font=8)
         except:
             pass
-        #time.sleep(20)
+
         window.update()
         print('here1')
-        #time.sleep(30)
-        #window.after(60000)
+
 
 #主函数运行
 monitor()
