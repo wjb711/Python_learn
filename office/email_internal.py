@@ -1,17 +1,22 @@
+#此为邮件发送方法 通过命令和配置文件， 触发邮件发送
 
 import configparser
 import smtplib
 from email.mime.text import MIMEText
 import sys
+
+
+#配置文件选取命令后第一个参数， 也就是config.ini
 CONFIGFILE=sys.argv[1]
 print(CONFIGFILE)
 
 
-
+#定义内部邮件的函数
 def internal_email():
-    #CONFIGFILE="config.txt"
+    
     config=configparser.ConfigParser()
     config.read(CONFIGFILE)
+    
     print(config['DEFAULT']['mail_server'])
     mail_server=config['DEFAULT']['mail_server']
 
@@ -29,11 +34,7 @@ def internal_email():
 
     print(config['DEFAULT']['content'])
     content=config['DEFAULT']['content']
-#内部邮件的发送方法
-    
-    #from email.mime.multipart import MIMEMultipart
-    
-    #print ('hello')
+
 
     smtp = smtplib.SMTP()
     
